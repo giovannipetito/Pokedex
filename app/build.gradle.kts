@@ -120,6 +120,9 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
 
+    // Coil
+    implementation(libs.coil.compose)
+
     // Dependency Injection - Hilt
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.hilt.android)

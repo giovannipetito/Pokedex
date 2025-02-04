@@ -4,3 +4,8 @@ enum class SearchWidgetState {
     OPENED,
     CLOSED
 }
+
+enum class AlertBarPosition {
+    TOP,
+    BOTTOM
+}

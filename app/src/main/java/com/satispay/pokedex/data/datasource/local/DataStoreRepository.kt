@@ -1,4 +1,4 @@
-package com.satispay.pokedex.data
+package com.satispay.pokedex.data.datasource.local
 
 import android.content.Context
 import androidx.compose.foundation.isSystemInDarkTheme

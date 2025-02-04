@@ -27,7 +27,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.satispay.pokedex.BuildConfig
-import com.satispay.pokedex.data.DataStoreRepository
+import com.satispay.pokedex.data.datasource.local.DataStoreRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import com.satispay.pokedex.R

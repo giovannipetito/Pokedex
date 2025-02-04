@@ -25,7 +25,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.satispay.pokedex.data.DataStoreRepository
+import com.satispay.pokedex.data.datasource.local.DataStoreRepository
 import com.satispay.pokedex.navigation.navgraph.RootNavGraph
 import com.satispay.pokedex.presentation.viewmodel.MainViewModel
 import com.satispay.pokedex.ui.items.HubModalNavigationDrawer
