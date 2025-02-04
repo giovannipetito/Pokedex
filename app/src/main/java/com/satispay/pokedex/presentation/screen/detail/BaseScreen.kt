@@ -27,7 +27,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.satispay.pokedex.R
 import com.satispay.pokedex.presentation.viewmodel.TextFieldsViewModel
-import com.satispay.pokedex.ui.items.HubSearchTopAppBar
+import com.satispay.pokedex.ui.items.PokedexSearchTopAppBar
 import com.satispay.pokedex.ui.items.InfoDialog
 import com.satispay.pokedex.utils.SearchWidgetState
 
@@ -54,7 +54,7 @@ fun BaseScreen(
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
-            HubSearchTopAppBar(
+            PokedexSearchTopAppBar(
                 scrollBehavior = scrollBehavior,
                 title = title,
                 showSearch = showSearch,

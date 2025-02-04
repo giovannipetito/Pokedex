@@ -23,7 +23,7 @@ import com.satispay.pokedex.data.model.Pokemon
 import com.satispay.pokedex.domain.AlertBarState
 import com.satispay.pokedex.presentation.viewmodel.PagingViewModel
 import com.satispay.pokedex.ui.items.AlertBarContent
-import com.satispay.pokedex.ui.items.HubProgressIndicator
+import com.satispay.pokedex.ui.items.PokedexProgressIndicator
 import com.satispay.pokedex.ui.items.cards.PokemonCard
 import com.satispay.pokedex.ui.items.rememberAlertBarState
 import com.satispay.pokedex.utils.AlertBarPosition
@@ -38,7 +38,6 @@ fun PokedexScreen(
         "hiltViewModel",
         "DataSource",
         "suspend functions",
-        "sealed class HubResult",
         "Flow",
         "PagingData"
     )
@@ -72,7 +71,7 @@ fun ShowPokemons(pokemons: LazyPagingItems<Pokemon>, paddingValues: PaddingValue
     ) {
         if (pokemons.itemCount == 0) {
             item {
-                HubProgressIndicator()
+                PokedexProgressIndicator()
             }
         }
 

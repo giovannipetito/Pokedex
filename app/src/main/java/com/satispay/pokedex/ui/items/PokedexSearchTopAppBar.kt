@@ -43,15 +43,15 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import com.satispay.pokedex.utils.Constants.HUB_TOP_BAR_LANDSCAPE_HEIGHT
-import com.satispay.pokedex.utils.Constants.HUB_TOP_BAR_PORTRAIT_HEIGHT
+import com.satispay.pokedex.utils.Constants.POKEDEX_TOP_BAR_LANDSCAPE_HEIGHT
+import com.satispay.pokedex.utils.Constants.POKEDEX_TOP_BAR_PORTRAIT_HEIGHT
 import com.satispay.pokedex.utils.Globals.getTextFieldColors
 import com.satispay.pokedex.utils.SearchWidgetState
 import com.satispay.pokedex.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HubSearchTopAppBar(
+fun PokedexSearchTopAppBar(
     scrollBehavior: TopAppBarScrollBehavior,
     title: String,
     showSearch: Boolean,
@@ -169,9 +169,9 @@ fun TextFieldTopAppBar(
 ) {
     val textFieldTopAppBarHeight =
         if (LocalConfiguration.current.orientation == Configuration.ORIENTATION_PORTRAIT)
-            HUB_TOP_BAR_PORTRAIT_HEIGHT
+            POKEDEX_TOP_BAR_PORTRAIT_HEIGHT
         else
-            HUB_TOP_BAR_LANDSCAPE_HEIGHT
+            POKEDEX_TOP_BAR_LANDSCAPE_HEIGHT
 
     val focusRequester = remember { FocusRequester() }
     val keyboardController = LocalSoftwareKeyboardController.current

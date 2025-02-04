@@ -10,7 +10,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun HubProgressIndicator(
+fun PokedexProgressIndicator(
     modifier: Modifier = Modifier,
     strokeWidth: Dp = 4.dp
 ) {
@@ -24,6 +24,6 @@ fun HubProgressIndicator(
 
 @Composable
 @Preview(showBackground = true)
-fun HubCircularProgressIndicatorPreview() {
-    HubProgressIndicator()
+fun PokedexProgressIndicatorPreview() {
+    PokedexProgressIndicator()
 }

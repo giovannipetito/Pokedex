@@ -19,7 +19,7 @@ import com.satispay.pokedex.navigation.routes.MainRoutes
 import com.satispay.pokedex.utils.Globals.getCurrentRoute
 
 @Composable
-fun HubBottomAppBar(
+fun PokedexBottomAppBar(
     navController: NavHostController,
     currentPage: Int,
     onPageSelected: (Int) -> Unit

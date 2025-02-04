@@ -28,7 +28,7 @@ import androidx.navigation.compose.rememberNavController
 import com.satispay.pokedex.data.datasource.local.DataStoreRepository
 import com.satispay.pokedex.navigation.navgraph.RootNavGraph
 import com.satispay.pokedex.presentation.viewmodel.MainViewModel
-import com.satispay.pokedex.ui.items.HubModalNavigationDrawer
+import com.satispay.pokedex.ui.items.PokedexModalNavigationDrawer
 import com.satispay.pokedex.ui.theme.PokedexTheme
 import com.satispay.pokedex.utils.Globals.getCurrentRoute
 import com.satispay.pokedex.utils.Globals.mainRoutes
@@ -66,14 +66,14 @@ class MainActivity : ComponentActivity() {
             val repository = DataStoreRepository(context)
 
             val darkThemeFlow: Flow<Boolean> = repository.isDarkTheme()
-            val hubColorFlow: Flow<Boolean> = repository.isDynamicColor()
+            val pokedexColorFlow: Flow<Boolean> = repository.isDynamicColor()
             var darkTheme: Boolean = remember { darkThemeFlow }.collectAsState(initial = false).value
-            var hubColor: Boolean = remember { hubColorFlow }.collectAsState(initial = false).value
+            var pokedexColor: Boolean = remember { pokedexColorFlow }.collectAsState(initial = false).value
 
             var currentPage: Int by remember { mutableIntStateOf(0) }
             val pagerState: PagerState = rememberPagerState(pageCount = {3})
 
-            PokedexTheme(darkTheme = darkTheme, dynamicColor = !hubColor) {
+            PokedexTheme(darkTheme = darkTheme, dynamicColor = !pokedexColor) {
 
                 val navController: NavHostController = rememberNavController()
                 val currentRoute = getCurrentRoute(navController = navController)
@@ -84,16 +84,16 @@ class MainActivity : ComponentActivity() {
                         mainViewModel = mainViewModel
                     )
                 } else {
-                    HubModalNavigationDrawer(
+                    PokedexModalNavigationDrawer(
                         darkTheme = darkTheme,
-                        dynamicColor = hubColor,
+                        dynamicColor = pokedexColor,
                         onThemeUpdated = {
                             darkTheme = !darkTheme
                             scope.launch { repository.setDarkTheme(theme = darkTheme) }
                         },
                         onColorUpdated = {
-                            hubColor = !hubColor
-                            scope.launch { repository.setDynamicColor(color = hubColor) }
+                            pokedexColor = !pokedexColor
+                            scope.launch { repository.setDynamicColor(color = pokedexColor) }
                         },
                         mainViewModel = mainViewModel,
                         navController = navController,

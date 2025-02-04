@@ -33,7 +33,7 @@ import kotlinx.coroutines.launch
 import com.satispay.pokedex.R
 
 @Composable
-fun HubModalDrawerSheet(
+fun PokedexModalDrawerSheet(
     drawerState: DrawerState,
     drawerScope: CoroutineScope,
     darkTheme: Boolean,

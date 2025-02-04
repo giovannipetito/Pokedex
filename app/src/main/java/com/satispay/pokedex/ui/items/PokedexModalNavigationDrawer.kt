@@ -35,7 +35,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @Composable
-fun HubModalNavigationDrawer(
+fun PokedexModalNavigationDrawer(
     darkTheme: Boolean,
     dynamicColor: Boolean,
     onThemeUpdated: () -> Unit,
@@ -77,7 +77,7 @@ fun HubModalNavigationDrawer(
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
-            HubModalDrawerSheet(
+            PokedexModalDrawerSheet(
                 drawerState = drawerState,
                 drawerScope = drawerScope,
                 darkTheme = darkTheme,
@@ -113,7 +113,7 @@ fun HubModalNavigationDrawer(
                 }
             },
             bottomBar = {
-                HubBottomAppBar(
+                PokedexBottomAppBar(
                     navController = navController,
                     currentPage = currentPage,
                     onPageSelected = onPageSelected

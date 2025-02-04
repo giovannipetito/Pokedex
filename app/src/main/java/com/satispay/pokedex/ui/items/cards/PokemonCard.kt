@@ -55,7 +55,7 @@ fun PokemonCard(pokemon: Pokemon?, modifier: Modifier) {
 
 @Preview(showBackground = true)
 @Composable
-fun HubCardPreview() {
+fun PokemonCardPreview() {
     PokemonCard(
         pokemon = Pokemon(
             name = "Pikachu",

@@ -31,7 +31,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.satispay.pokedex.navigation.routes.MainRoutes
 import com.satispay.pokedex.ui.items.ShimmerItem
-import com.satispay.pokedex.ui.theme.LocalHubColors
+import com.satispay.pokedex.ui.theme.LocalPokedexColors
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
@@ -52,8 +52,8 @@ object Globals {
         val mainBackgroundColors = listOf(
             // MaterialTheme.colorScheme.surface,
             // MaterialTheme.colorScheme.surfaceVariant,
-            LocalHubColors.current.backgroundStartColor,
-            LocalHubColors.current.backgroundEndColor
+            LocalPokedexColors.current.backgroundStartColor,
+            LocalPokedexColors.current.backgroundEndColor
         )
         return Brush.verticalGradient(colors = mainBackgroundColors)
     }
