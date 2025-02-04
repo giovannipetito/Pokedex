@@ -12,8 +12,8 @@ class UsersDataSourceImpl @Inject constructor(
     @Named("baseUrl") private val apiService: ApiService
 ): UsersDataSource {
 
-    override suspend fun getPokemons(page: Int): PokemonResponse {
-        val response: PokemonResponse = apiService.getPokemons(page)
+    override suspend fun getPokemons(offset: Int, limit: Int): PokemonResponse {
+        val response: PokemonResponse = apiService.getPokemons(offset, limit)
         return response
     }
 }

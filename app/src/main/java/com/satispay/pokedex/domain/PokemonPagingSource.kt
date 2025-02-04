@@ -7,45 +7,51 @@ import androidx.paging.PagingState
 import com.satispay.pokedex.data.datasource.remote.UsersDataSource
 import com.satispay.pokedex.data.model.Pokemon
 import com.satispay.pokedex.data.response.PokemonResponse
+import com.satispay.pokedex.presentation.viewmodel.UIEvent
+import com.satispay.pokedex.utils.Config.PAGE_LIMIT
 import retrofit2.HttpException
 import java.io.IOException
 
 class PokemonPagingSource(
     private val dataSource: UsersDataSource,
-    private val state: AlertBarState
+    private val onEvent: (UIEvent) -> Unit
 ) : PagingSource<Int, Pokemon>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Pokemon> {
-        val currentPage = params.key ?: 1
+        val currentOffset = params.key ?: 0
         return try {
-            val response: PokemonResponse = dataSource.getPokemons(currentPage)
+            val response: PokemonResponse = dataSource.getPokemons(offset = currentOffset, limit = PAGE_LIMIT)
+
+            // Checking next
+            val nextOffset = if (response.next == null) null else currentOffset + PAGE_LIMIT
+
+            // Checking count
+            // val nextOffset = if ((currentOffset + PAGE_LIMIT) < response.count) currentOffset + PAGE_LIMIT else null
 
             if (response.results.isNotEmpty()) {
-                state.addSuccess(success = "Loading successful!")
-                LoadResult.Page(
-                    data = response.results,
-                    prevKey = if (currentPage == 1) null else currentPage.minus(1),
-                    nextKey = if (response.results.isEmpty()) null else currentPage.plus(1)
-                )
+                if (currentOffset == 0)
+                    onEvent(UIEvent.ShowSuccess("Loading successful!"))
             } else {
-                state.addError(Exception("No items found."))
-                LoadResult.Page(
-                    data = emptyList(),
-                    prevKey = null,
-                    nextKey = null
-                )
+                onEvent(UIEvent.ShowError("No items found!"))
             }
+
+            LoadResult.Page(
+                data = response.results,
+                prevKey = if (currentOffset == 0) null else currentOffset - PAGE_LIMIT,
+                nextKey = nextOffset
+            )
         } catch (exception: IOException) {
-            val error = IOException("Please Check Internet Connection: ")
-            state.addError(Exception(error.message + exception.localizedMessage))
-            LoadResult.Error(error)
-        } catch (exception: HttpException) {
-            state.addError(Exception(exception.localizedMessage))
+            onEvent(UIEvent.ShowError("An error occurred"))
             LoadResult.Error(exception)
+        } catch (http: HttpException) {
+            onEvent(UIEvent.ShowError(http.localizedMessage ?: "Unknown HTTP error"))
+            LoadResult.Error(http)
         }
     }
 
     override fun getRefreshKey(state: PagingState<Int, Pokemon>): Int? {
-        return state.anchorPosition
+        val anchorPosition = state.anchorPosition ?: return null
+        val anchorPage = state.closestPageToPosition(anchorPosition) ?: return null
+        return anchorPage.prevKey?.plus(PAGE_LIMIT) ?: anchorPage.nextKey?.minus(PAGE_LIMIT)
     }
 }

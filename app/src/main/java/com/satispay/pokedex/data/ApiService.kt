@@ -8,6 +8,7 @@ interface ApiService {
 
     @GET("pokemon")
     suspend fun getPokemons(
-        @Query("page") page: Int
+        @Query("offset") offset: Int,
+        @Query("limit") limit: Int
     ): PokemonResponse
 }

@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -22,12 +24,14 @@ import com.satispay.pokedex.R
 import com.satispay.pokedex.data.model.Pokemon
 import com.satispay.pokedex.domain.AlertBarState
 import com.satispay.pokedex.presentation.viewmodel.PagingViewModel
+import com.satispay.pokedex.presentation.viewmodel.UIEvent
 import com.satispay.pokedex.ui.items.AlertBarContent
 import com.satispay.pokedex.ui.items.PokedexProgressIndicator
 import com.satispay.pokedex.ui.items.cards.PokemonCard
 import com.satispay.pokedex.ui.items.rememberAlertBarState
 import com.satispay.pokedex.utils.AlertBarPosition
 import com.satispay.pokedex.utils.Globals.getContentPadding
+import kotlinx.coroutines.launch
 
 @Composable
 fun PokedexScreen(
@@ -42,17 +46,42 @@ fun PokedexScreen(
         "PagingData"
     )
 
+    val alertBarState: AlertBarState = rememberAlertBarState()
+
+    /*
+    LaunchedEffect(Unit) {
+        viewModel.uiEvents.collect { event ->
+            when (event) {
+                is UIEvent.ShowSuccess -> alertBarState.addSuccess(event.message)
+                is UIEvent.ShowError   -> alertBarState.addError(Exception(event.message))
+            }
+        }
+    }
+    */
+
+    val scope = rememberCoroutineScope()
+    DisposableEffect(Unit) {
+        val job = scope.launch {
+            viewModel.uiEvents.collect { event ->
+                when (event) {
+                    is UIEvent.ShowSuccess -> alertBarState.addSuccess(event.message)
+                    is UIEvent.ShowError   -> alertBarState.addError(Exception(event.message))
+                }
+            }
+        }
+        onDispose { job.cancel() }
+    }
+
     BaseScreen(
         navController = navController,
         title = stringResource(id = R.string.pokedex_screen_title),
         topics = topics
     ) { paddingValues ->
-        val state: AlertBarState = rememberAlertBarState()
-        val pokemons: LazyPagingItems<Pokemon> = viewModel.getDataFlow(state = state).collectAsLazyPagingItems()
+        val pokemons: LazyPagingItems<Pokemon> = viewModel.pokemonFlow.collectAsLazyPagingItems()
 
         AlertBarContent(
             position = AlertBarPosition.BOTTOM,
-            alertBarState = state,
+            alertBarState = alertBarState,
             successMaxLines = 3,
             errorMaxLines = 3
         ) {
