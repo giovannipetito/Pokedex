@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Pokedex</string>
+
+    <string name="pokedex_screen_title">Pokedex</string>
+    <string name="favorites_screen_title">Favorites</string>
+
 </resources>

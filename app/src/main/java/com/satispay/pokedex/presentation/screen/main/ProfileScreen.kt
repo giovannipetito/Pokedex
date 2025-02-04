@@ -15,6 +15,7 @@ import androidx.navigation.compose.rememberNavController
 import com.satispay.pokedex.ui.items.MainTextButton
 import com.satispay.pokedex.utils.Constants.STATUS_BAR_HEIGHT
 import com.satispay.pokedex.R
+import com.satispay.pokedex.navigation.routes.ProfileRoutes
 
 @Composable
 fun ProfileScreen(navController: NavController) {
@@ -43,32 +44,14 @@ fun ProfileScreen(navController: NavController) {
         horizontalAlignment = Alignment.CenterHorizontally,
         contentPadding = PaddingValues(top = STATUS_BAR_HEIGHT)
     ) {
-        /*
         item {
             MainTextButton(
                 onClick = {
-                    navController.navigate(route = Auth)
+                    navController.navigate(route = ProfileRoutes.Pokedex)
                 },
-                id = R.string.auth_sign_up
+                id = R.string.pokedex_screen_title
             )
         }
-        item {
-            MainTextButton(
-                onClick = {
-                    navController.navigate(route = ProfileRoutes.Contacts)
-                },
-                id = R.string.contacts
-            )
-        }
-        item {
-            MainTextButton(
-                onClick = {
-                    navController.navigate(route = ProfileRoutes.Header)
-                },
-                id = R.string.header
-            )
-        }
-        */
     }
 }
 
