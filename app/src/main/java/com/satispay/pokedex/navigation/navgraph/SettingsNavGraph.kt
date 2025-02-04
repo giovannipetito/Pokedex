@@ -6,6 +6,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.satispay.pokedex.navigation.Graph
 import com.satispay.pokedex.navigation.routes.MainRoutes
+import com.satispay.pokedex.navigation.routes.SettingsRoutes
+import com.satispay.pokedex.presentation.screen.detail.FavoritesScreen
 import com.satispay.pokedex.presentation.screen.main.SettingsScreen
 
 fun NavGraphBuilder.settingsNavGraph(
@@ -21,10 +23,8 @@ fun NavGraphBuilder.settingsNavGraph(
             SettingsScreen(navController = navController)
         }
 
-        /*
-        composable<SettingsRoutes.Colors> {
-            HubColorsScreen(navController = navController)
+        composable<SettingsRoutes.Favorites> {
+            FavoritesScreen(navController = navController)
         }
-        */
     }
 }
