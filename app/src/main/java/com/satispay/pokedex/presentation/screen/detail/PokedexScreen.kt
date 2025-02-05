@@ -22,6 +22,7 @@ import androidx.paging.compose.itemContentType
 import androidx.paging.compose.itemKey
 import com.satispay.pokedex.R
 import com.satispay.pokedex.data.model.Pokemon
+import com.satispay.pokedex.data.model.PokemonDetail
 import com.satispay.pokedex.domain.AlertBarState
 import com.satispay.pokedex.presentation.viewmodel.PagingViewModel
 import com.satispay.pokedex.presentation.viewmodel.UIEvent
@@ -77,7 +78,7 @@ fun PokedexScreen(
         title = stringResource(id = R.string.pokedex_screen_title),
         topics = topics
     ) { paddingValues ->
-        val pokemons: LazyPagingItems<Pokemon> = viewModel.pokemonFlow.collectAsLazyPagingItems()
+        val pokemonDetails: LazyPagingItems<PokemonDetail> = viewModel.pokemonFlow.collectAsLazyPagingItems()
 
         AlertBarContent(
             position = AlertBarPosition.BOTTOM,
@@ -85,38 +86,36 @@ fun PokedexScreen(
             successMaxLines = 3,
             errorMaxLines = 3
         ) {
-            ShowPokemons(pokemons = pokemons, paddingValues = paddingValues)
+            ShowPokemons(pokemonDetails = pokemonDetails, paddingValues = paddingValues)
         }
     }
 }
 
 @Composable
-fun ShowPokemons(pokemons: LazyPagingItems<Pokemon>, paddingValues: PaddingValues) {
-
-    Log.d("[PAGING]", "Load State:" + pokemons.loadState.toString())
+fun ShowPokemons(pokemonDetails: LazyPagingItems<PokemonDetail>, paddingValues: PaddingValues) {
 
     LazyColumn(
         contentPadding = getContentPadding(paddingValues = paddingValues)
     ) {
-        if (pokemons.itemCount == 0) {
+        if (pokemonDetails.itemCount == 0) {
             item {
                 PokedexProgressIndicator()
             }
         }
 
         items(
-            count = pokemons.itemCount,
-            key = pokemons.itemKey { it.url },
-            contentType = pokemons.itemContentType { "contentType" }
+            count = pokemonDetails.itemCount,
+            key = pokemonDetails.itemKey { it.id.toString() }, // key = { index -> pokemonDetails[index]?.id.toString() }
+            contentType = pokemonDetails.itemContentType { "contentType" }
         ) { index: Int ->
-            val pokemon: Pokemon? = pokemons[index]
+            val pokemonDetail: PokemonDetail? = pokemonDetails[index]
             Spacer(modifier = Modifier.height(height = 4.dp))
-            PokemonCard(pokemon = pokemon, modifier = Modifier)
+            PokemonCard(pokemonDetail = pokemonDetail, modifier = Modifier)
             Spacer(modifier = Modifier.height(height = 4.dp))
         }
 
         // Handle loading state // todo: to test.
-        pokemons.apply {
+        pokemonDetails.apply {
             when {
                 loadState.refresh is LoadState.Loading -> {
                     // Show loading at the beginning of the list

@@ -3,26 +3,26 @@ package com.satispay.pokedex.data.model
 import com.google.gson.annotations.SerializedName
 
 data class PokemonDetail(
-    @SerializedName("abilities") val abilities: List<Ability>,
-    @SerializedName("base_experience") val baseExperience: Int,
-    @SerializedName("cries") val cries: Cries,
-    @SerializedName("forms") val forms: List<NameUrl>,
-    @SerializedName("game_indices") val gameIndices: List<GameIndex>,
-    @SerializedName("height") val height: Int,
+    // @SerializedName("abilities") val abilities: List<Ability>,
+    // @SerializedName("base_experience") val baseExperience: Int,
+    // @SerializedName("cries") val cries: Cries,
+    // @SerializedName("forms") val forms: List<NameUrl>,
+    // @SerializedName("game_indices") val gameIndices: List<GameIndex>,
+    // @SerializedName("height") val height: Int,
     // @SerializedName("held_items") val heldItems: List<HeldItem>,
     @SerializedName("id") val id: Int,
-    @SerializedName("is_default") val isDefault: Boolean,
-    @SerializedName("location_area_encounters") val locationAreaEncounters: String,
-    @SerializedName("moves") val moves: List<MoveDetail>,
+    // @SerializedName("is_default") val isDefault: Boolean,
+    // @SerializedName("location_area_encounters") val locationAreaEncounters: String,
+    // @SerializedName("moves") val moves: List<MoveDetail>,
     @SerializedName("name") val name: String,
-    @SerializedName("order") val order: Int,
+    // @SerializedName("order") val order: Int,
     // @SerializedName("past_abilities") val pastAbilities: List<Any>,
     // @SerializedName("past_types") val pastTypes: List<Any>,
     @SerializedName("species") val species: NameUrl,
     @SerializedName("sprites") val sprites: Sprites,
-    @SerializedName("stats") val stats: List<StatDetail>,
+    // @SerializedName("stats") val stats: List<StatDetail>,
     @SerializedName("types") val types: List<TypeSlot>,
-    @SerializedName("weight") val weight: Int
+    // @SerializedName("weight") val weight: Int
 )
 
 data class Ability(
@@ -66,7 +66,7 @@ data class Sprites(
     @SerializedName("front_female") val frontFemale: String?,
     @SerializedName("front_shiny") val frontShiny: String?,
     @SerializedName("front_shiny_female") val frontShinyFemale: String?,
-    @SerializedName("other") val other: OtherSprites?,
+    // @SerializedName("other") val other: OtherSprites?,
     // @SerializedName("versions") val versions: Versions?
 )
 

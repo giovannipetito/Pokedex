@@ -6,6 +6,7 @@ import androidx.paging.PagingSource.LoadResult
 import androidx.paging.PagingState
 import com.satispay.pokedex.data.datasource.remote.UsersDataSource
 import com.satispay.pokedex.data.model.Pokemon
+import com.satispay.pokedex.data.model.PokemonDetail
 import com.satispay.pokedex.data.response.PokemonResponse
 import com.satispay.pokedex.presentation.viewmodel.UIEvent
 import com.satispay.pokedex.utils.Config.PAGE_LIMIT
@@ -15,12 +16,17 @@ import java.io.IOException
 class PokemonPagingSource(
     private val dataSource: UsersDataSource,
     private val onEvent: (UIEvent) -> Unit
-) : PagingSource<Int, Pokemon>() {
+) : PagingSource<Int, PokemonDetail>() {
 
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Pokemon> {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, PokemonDetail> {
         val currentOffset = params.key ?: 0
         return try {
             val response: PokemonResponse = dataSource.getPokemons(offset = currentOffset, limit = PAGE_LIMIT)
+            val pokemons: List<Pokemon> = response.results
+
+            val pokemonDetails: List<PokemonDetail> = pokemons.map { pokemon ->
+                dataSource.getPokemonDetail(pokemon.url)
+            }
 
             // Checking next
             val nextOffset = if (response.next == null) null else currentOffset + PAGE_LIMIT
@@ -28,7 +34,7 @@ class PokemonPagingSource(
             // Checking count
             // val nextOffset = if ((currentOffset + PAGE_LIMIT) < response.count) currentOffset + PAGE_LIMIT else null
 
-            if (response.results.isNotEmpty()) {
+            if (pokemonDetails.isNotEmpty()) {
                 if (currentOffset == 0)
                     onEvent(UIEvent.ShowSuccess("Loading successful!"))
             } else {
@@ -36,7 +42,7 @@ class PokemonPagingSource(
             }
 
             LoadResult.Page(
-                data = response.results,
+                data = pokemonDetails,
                 prevKey = if (currentOffset == 0) null else currentOffset - PAGE_LIMIT,
                 nextKey = nextOffset
             )
@@ -49,7 +55,7 @@ class PokemonPagingSource(
         }
     }
 
-    override fun getRefreshKey(state: PagingState<Int, Pokemon>): Int? {
+    override fun getRefreshKey(state: PagingState<Int, PokemonDetail>): Int? {
         val anchorPosition = state.anchorPosition ?: return null
         val anchorPage = state.closestPageToPosition(anchorPosition) ?: return null
         return anchorPage.prevKey?.plus(PAGE_LIMIT) ?: anchorPage.nextKey?.minus(PAGE_LIMIT)

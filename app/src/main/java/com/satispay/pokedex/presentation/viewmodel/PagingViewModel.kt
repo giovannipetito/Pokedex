@@ -9,7 +9,7 @@ import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
 import com.satispay.pokedex.data.datasource.remote.UsersDataSource
 import com.satispay.pokedex.data.model.Pokemon
-import com.satispay.pokedex.domain.AlertBarState
+import com.satispay.pokedex.data.model.PokemonDetail
 import com.satispay.pokedex.domain.PokemonPagingSource
 import com.satispay.pokedex.presentation.viewmodel.UIEvent.ShowSuccess
 import com.satispay.pokedex.utils.Config.PAGE_LIMIT
@@ -30,10 +30,10 @@ class PagingViewModel @Inject constructor(
     private val _uiEvents = MutableSharedFlow<UIEvent>()
     val uiEvents = _uiEvents.asSharedFlow()
 
-    private val _uiEvents2: MutableStateFlow<UIEvent> = MutableStateFlow(ShowSuccess(""))
-    val uiEvents2: StateFlow<UIEvent> = _uiEvents2.asStateFlow()
+    // private val _uiEvents: MutableStateFlow<UIEvent> = MutableStateFlow(ShowSuccess(""))
+    // val uiEvents: StateFlow<UIEvent> = _uiEvents.asStateFlow()
 
-    private val pager: Pager<Int, Pokemon> by lazy {
+    private val pager: Pager<Int, PokemonDetail> by lazy {
         Pager(
             config = PagingConfig(pageSize = PAGE_LIMIT),
             pagingSourceFactory = {
@@ -46,7 +46,7 @@ class PagingViewModel @Inject constructor(
         )
     }
 
-    val pokemonFlow: Flow<PagingData<Pokemon>> = pager.flow.cachedIn(viewModelScope)
+    val pokemonFlow: Flow<PagingData<PokemonDetail>> = pager.flow.cachedIn(viewModelScope)
 }
 
 sealed class UIEvent {
