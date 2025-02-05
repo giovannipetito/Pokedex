@@ -23,6 +23,8 @@ data class PokemonDetail(
     // @SerializedName("stats") val stats: List<StatDetail>,
     @SerializedName("types") val types: List<TypeSlot>,
     // @SerializedName("weight") val weight: Int
+
+    val flavorTextEntries: List<FlavorTextEntry> = emptyList()
 )
 
 data class Ability(

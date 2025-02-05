@@ -1,9 +1,13 @@
 package com.satispay.pokedex.presentation.screen.detail
 
 import android.util.Log
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -21,13 +25,13 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemContentType
 import androidx.paging.compose.itemKey
 import com.satispay.pokedex.R
-import com.satispay.pokedex.data.model.Pokemon
 import com.satispay.pokedex.data.model.PokemonDetail
 import com.satispay.pokedex.domain.AlertBarState
 import com.satispay.pokedex.presentation.viewmodel.PagingViewModel
 import com.satispay.pokedex.presentation.viewmodel.UIEvent
 import com.satispay.pokedex.ui.items.AlertBarContent
 import com.satispay.pokedex.ui.items.PokedexProgressIndicator
+import com.satispay.pokedex.ui.items.cards.ErrorCard
 import com.satispay.pokedex.ui.items.cards.PokemonCard
 import com.satispay.pokedex.ui.items.rememberAlertBarState
 import com.satispay.pokedex.utils.AlertBarPosition
@@ -114,7 +118,7 @@ fun ShowPokemons(pokemonDetails: LazyPagingItems<PokemonDetail>, paddingValues: 
             Spacer(modifier = Modifier.height(height = 4.dp))
         }
 
-        // Handle loading state // todo: to test.
+        /*
         pokemonDetails.apply {
             when {
                 loadState.refresh is LoadState.Loading -> {
@@ -129,6 +133,36 @@ fun ShowPokemons(pokemonDetails: LazyPagingItems<PokemonDetail>, paddingValues: 
                 loadState.append is LoadState.Error -> {
                     // Handle error at the end of the list
                 }
+            }
+        }
+        */
+
+        // Handle loading state
+        when (val appendState = pokemonDetails.loadState.append) {
+            is LoadState.Loading -> {
+                item {
+                    // Show loading at the end of the list
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 16.dp),
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        PokedexProgressIndicator()
+                    }
+                }
+            }
+            is LoadState.Error -> {
+                item {
+                    // Show error item at the end of the list
+                    ErrorCard(
+                        errorMessage = appendState.error.localizedMessage ?: "Unknown error",
+                        onRetry = { pokemonDetails.retry() }
+                    )
+                }
+            }
+            else -> {
+                // Do nothing
             }
         }
     }

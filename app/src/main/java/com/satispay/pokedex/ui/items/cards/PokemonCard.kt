@@ -56,6 +56,7 @@ fun PokemonCard(pokemonDetail: PokemonDetail?, modifier: Modifier) {
                         .padding(all = 4.dp)
                 ) {
                     Text(text = pokemonDetail?.name.toString())
+                    Text(text = pokemonDetail?.flavorTextEntries?.get(0)?.flavorText.toString())
                     PokemonTypes(types = pokemonDetail?.types ?: emptyList())
                 }
             }

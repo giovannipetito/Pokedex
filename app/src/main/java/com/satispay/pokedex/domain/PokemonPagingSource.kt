@@ -25,7 +25,12 @@ class PokemonPagingSource(
             val pokemons: List<Pokemon> = response.results
 
             val pokemonDetails: List<PokemonDetail> = pokemons.map { pokemon ->
-                dataSource.getPokemonDetail(pokemon.url)
+
+                val pokemonDetail = dataSource.getPokemonDetail(pokemon.url)
+
+                val species = dataSource.getPokemonSpecies(pokemonDetail.species.url)
+
+                pokemonDetail.copy(flavorTextEntries = species.flavorTextEntries)
             }
 
             // Checking next
@@ -47,7 +52,7 @@ class PokemonPagingSource(
                 nextKey = nextOffset
             )
         } catch (exception: IOException) {
-            onEvent(UIEvent.ShowError("An error occurred"))
+            onEvent(UIEvent.ShowError("" + exception))
             LoadResult.Error(exception)
         } catch (http: HttpException) {
             onEvent(UIEvent.ShowError(http.localizedMessage ?: "Unknown HTTP error"))

@@ -30,59 +30,50 @@ data class PokemonSpecies(
     // @SerializedName("pokedex_numbers") val pokedexNumbers: List<PokedexNumber>,
     // @SerializedName("shape") val shape: NamedAPIResource?,
     // @SerializedName("varieties") val varieties: List<Variety>
-) {
-    data class Color(
-        @SerializedName("name") val name: String,
-        @SerializedName("url") val url: String
-    )
+)
 
-    data class EggGroup(
-        @SerializedName("name") val name: String,
-        @SerializedName("url") val url: String
-    )
+data class Color(
+    @SerializedName("name") val name: String,
+    @SerializedName("url") val url: String
+)
 
-    data class EvolutionChain(
-        @SerializedName("url") val url: String
-    )
+data class EggGroup(
+    @SerializedName("name") val name: String,
+    @SerializedName("url") val url: String
+)
 
-    data class FlavorTextEntry(
-        @SerializedName("flavor_text") val flavorText: String,
-        @SerializedName("language") val language: NamedAPIResource,
-        @SerializedName("version") val version: NamedAPIResource
-    )
+data class EvolutionChain(
+    @SerializedName("url") val url: String
+)
 
-    data class Genus(
-        @SerializedName("genus") val genus: String,
-        @SerializedName("language") val language: NamedAPIResource
-    )
+data class FlavorTextEntry(
+    @SerializedName("flavor_text") val flavorText: String,
+    @SerializedName("language") val language: NameUrl,
+    @SerializedName("version") val version: NameUrl
+)
 
-    data class Name(
-        @SerializedName("language") val language: NamedAPIResource,
-        @SerializedName("name") val name: String
-    )
+data class Genus(
+    @SerializedName("genus") val genus: String,
+    @SerializedName("language") val language: NameUrl
+)
 
-    data class PalParkEncounter(
-        @SerializedName("area") val area: NamedAPIResource,
-        @SerializedName("base_score") val baseScore: Int,
-        @SerializedName("rate") val rate: Int
-    )
+data class Name(
+    @SerializedName("language") val language: NameUrl,
+    @SerializedName("name") val name: String
+)
 
-    data class PokedexNumber(
-        @SerializedName("entry_number") val entryNumber: Int,
-        @SerializedName("pokedex") val pokedex: NamedAPIResource
-    )
+data class PalParkEncounter(
+    @SerializedName("area") val area: NameUrl,
+    @SerializedName("base_score") val baseScore: Int,
+    @SerializedName("rate") val rate: Int
+)
 
-    data class Variety(
-        @SerializedName("is_default") val isDefault: Boolean,
-        @SerializedName("pokemon") val pokemon: NamedAPIResource
-    )
+data class PokedexNumber(
+    @SerializedName("entry_number") val entryNumber: Int,
+    @SerializedName("pokedex") val pokedex: NameUrl
+)
 
-    /**
-     * A generic reusable data class that captures
-     * a resource with a name and a URL (common in the PokéAPI).
-     */
-    data class NamedAPIResource(
-        @SerializedName("name") val name: String,
-        @SerializedName("url") val url: String
-    )
-}
+data class Variety(
+    @SerializedName("is_default") val isDefault: Boolean,
+    @SerializedName("pokemon") val pokemon: NameUrl
+)
