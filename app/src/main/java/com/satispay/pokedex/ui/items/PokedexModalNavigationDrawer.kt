@@ -25,7 +25,6 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import com.satispay.pokedex.presentation.screen.main.HomeScreen
 import com.satispay.pokedex.presentation.screen.main.ProfileScreen
-import com.satispay.pokedex.presentation.screen.main.SettingsScreen
 import com.satispay.pokedex.presentation.viewmodel.MainViewModel
 import com.satispay.pokedex.utils.Globals.getCurrentRoute
 import com.satispay.pokedex.utils.Globals.getMainBackgroundColors
@@ -124,7 +123,6 @@ fun PokedexModalNavigationDrawer(
                     when (index) {
                         0 -> HomeScreen(navController = navController, mainViewModel = mainViewModel)
                         1 -> ProfileScreen(navController = navController)
-                        2 -> SettingsScreen(navController = navController)
                     }
                 }
             }

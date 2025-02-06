@@ -5,7 +5,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.satispay.pokedex.navigation.Graph.HOME_ROUTE
+import com.satispay.pokedex.navigation.routes.HomeRoutes
 import com.satispay.pokedex.navigation.routes.MainRoutes
+import com.satispay.pokedex.navigation.routes.ProfileRoutes
+import com.satispay.pokedex.presentation.screen.detail.PokedexScreen
 import com.satispay.pokedex.presentation.screen.main.HomeScreen
 import com.satispay.pokedex.presentation.viewmodel.MainViewModel
 
@@ -20,10 +23,11 @@ fun NavGraphBuilder.homeNavGraph(
         composable(
             route = MainRoutes.Home.route
         ) {
-            HomeScreen(
-                navController = navController,
-                mainViewModel = mainViewModel
-            )
+            HomeScreen(navController = navController, mainViewModel = mainViewModel)
+        }
+
+        composable<HomeRoutes.Pokedex> {
+            PokedexScreen(navController = navController)
         }
     }
 }

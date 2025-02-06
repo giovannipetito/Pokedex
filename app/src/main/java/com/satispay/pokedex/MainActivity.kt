@@ -1,17 +1,12 @@
 package com.satispay.pokedex
 
-import android.Manifest
-import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.collectAsState
@@ -21,7 +16,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
-import androidx.core.content.ContextCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
@@ -36,7 +30,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
-@ExperimentalAnimationApi
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
@@ -71,7 +64,7 @@ class MainActivity : ComponentActivity() {
             var pokedexColor: Boolean = remember { pokedexColorFlow }.collectAsState(initial = false).value
 
             var currentPage: Int by remember { mutableIntStateOf(0) }
-            val pagerState: PagerState = rememberPagerState(pageCount = {3})
+            val pagerState: PagerState = rememberPagerState(pageCount = {2})
 
             PokedexTheme(darkTheme = darkTheme, dynamicColor = !pokedexColor) {
 
@@ -106,20 +99,5 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
-
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(Manifest.permission.POST_NOTIFICATIONS)
-        }
-    }
-
-    private fun requestPermissions(vararg permissions: String) {
-        val requestPermissionLauncher = registerForActivityResult(
-            ActivityResultContracts.RequestMultiplePermissions()
-        ) { result ->
-            result.entries.forEach {
-                Log.d("MainActivity", "${it.key} = ${it.value}")
-            }
-        }
-        requestPermissionLauncher.launch(permissions.asList().toTypedArray())
     }
 }

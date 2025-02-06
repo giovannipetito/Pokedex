@@ -1,29 +1,23 @@
 package com.satispay.pokedex.navigation.routes
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Settings
-import androidx.compose.ui.graphics.vector.ImageVector
+import com.satispay.pokedex.R
 
 enum class MainRoutes(
     val route: String,
     val label: String,
-    val icon: ImageVector
+    val selectedIconRes: Int,
+    val unselectedIconRes: Int
 ) {
     Home(
         route = "home_screen",
         label = "Home",
-        icon = Icons.Default.Home
+        selectedIconRes = R.drawable.ico_pokedex_on,
+        unselectedIconRes = R.drawable.ico_pokedex_off
     ),
     Profile(
         route = "profile_screen",
         label = "Profile",
-        icon = Icons.Default.Person
-    ),
-    Settings(
-        route = "settings_screen",
-        label = "Settings",
-        icon = Icons.Default.Settings
+        selectedIconRes = R.drawable.ico_favorites_on,
+        unselectedIconRes = R.drawable.ico_favorites_off
     )
 }

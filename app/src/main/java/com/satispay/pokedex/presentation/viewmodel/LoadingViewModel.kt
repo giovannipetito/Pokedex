@@ -6,28 +6,10 @@ import android.content.ContextWrapper
 import android.content.pm.ActivityInfo
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.satispay.pokedex.navigation.routes.MainRoutes
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 class LoadingViewModel() : ViewModel() {
-
-    private val _startDestination: MutableState<String> = mutableStateOf(MainRoutes.Home.route)
-    val startDestination: State<String> = _startDestination
-
-    init {
-        viewModelScope.launch(Dispatchers.IO) {
-            delay(3000)
-            _startDestination.value = MainRoutes.Home.route
-        }
-    }
 
     @Composable
     fun KeepOrientationPortrait() {

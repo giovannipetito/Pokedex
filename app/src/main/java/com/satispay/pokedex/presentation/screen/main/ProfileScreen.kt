@@ -1,14 +1,17 @@
 package com.satispay.pokedex.presentation.screen.main
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
@@ -45,11 +48,18 @@ fun ProfileScreen(navController: NavController) {
         contentPadding = PaddingValues(top = STATUS_BAR_HEIGHT)
     ) {
         item {
+            Image(
+                modifier = Modifier.fillMaxWidth(),
+                painter = painterResource(id = R.drawable.logo_pokemon),
+                contentDescription = "Poke ball Image"
+            )
+        }
+        item {
             MainTextButton(
                 onClick = {
-                    navController.navigate(route = ProfileRoutes.Pokedex)
+                    navController.navigate(route = ProfileRoutes.Favorites)
                 },
-                id = R.string.pokedex_screen_title
+                id = R.string.open_favorites_screen
             )
         }
     }

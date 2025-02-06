@@ -4,4 +4,7 @@
     <string name="pokedex_screen_title">Pokedex</string>
     <string name="favorites_screen_title">Favorites</string>
 
+    <string name="open_pokedex_screen">Open the Pokedex!</string>
+    <string name="open_favorites_screen">Open the Favorites!</string>
+
 </resources>

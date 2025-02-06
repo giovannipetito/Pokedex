@@ -8,6 +8,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
@@ -32,6 +33,12 @@ fun PokedexBottomAppBar(
 
                     val isSelected = index == currentPage
 
+                    val iconRes = if (isSelected) {
+                        screen.selectedIconRes
+                    } else {
+                        screen.unselectedIconRes
+                    }
+
                     itemColor = if (isSelected)
                         MaterialTheme.colorScheme.primary
                     else
@@ -49,11 +56,12 @@ fun PokedexBottomAppBar(
                             // }
                         }
                     ) {
+                        val iconPainter = painterResource(id = iconRes)
                         Icon(
-                            screen.icon,
+                            modifier = Modifier.size(size = 36.dp),
+                            painter = iconPainter,
                             contentDescription = screen.label,
-                            tint = itemColor,
-                            modifier = Modifier.size(size = 36.dp)
+                            tint = itemColor
                         )
                     }
                 }

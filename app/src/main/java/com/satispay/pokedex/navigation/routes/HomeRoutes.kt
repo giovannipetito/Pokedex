@@ -3,7 +3,7 @@ package com.satispay.pokedex.navigation.routes
 import kotlinx.serialization.Serializable
 
 @Serializable
-sealed class SettingsRoutes {
+sealed class HomeRoutes {
     @Serializable
-    data object Favorites: SettingsRoutes()
+    data object Pokedex: HomeRoutes()
 }

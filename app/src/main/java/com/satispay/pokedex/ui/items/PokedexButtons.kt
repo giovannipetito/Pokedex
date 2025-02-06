@@ -16,7 +16,7 @@ fun MainTextButton(onClick: () -> Unit, id: Int) {
             text = stringResource(id = id),
             fontWeight = FontWeight.Normal,
             color = MaterialTheme.colorScheme.primary,
-            fontSize = MaterialTheme.typography.headlineSmall.fontSize
+            fontSize = MaterialTheme.typography.headlineLarge.fontSize
         )
     }
 }
