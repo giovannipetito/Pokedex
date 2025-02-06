@@ -1,11 +1,7 @@
 package com.satispay.pokedex.ui.items
 
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -60,18 +56,6 @@ fun PokedexBottomAppBar(
                             modifier = Modifier.size(size = 36.dp)
                         )
                     }
-                }
-            },
-            floatingActionButton = {
-                FloatingActionButton(
-                    onClick = {
-                        // Do something.
-                    },
-                    containerColor = MaterialTheme.colorScheme.tertiary, // BottomAppBarDefaults.bottomAppBarFabColor,
-                    contentColor = MaterialTheme.colorScheme.onTertiary,
-                    elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation()
-                ) {
-                    Icon(imageVector = Icons.Filled.Add, "Add")
                 }
             }
         )

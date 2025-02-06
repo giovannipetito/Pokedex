@@ -1,75 +1,108 @@
 package com.satispay.pokedex.ui.items.cards
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.BoxWithConstraintsScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImagePainter
-import coil.compose.rememberAsyncImagePainter
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
+import com.satispay.pokedex.data.model.NameUrl
 import com.satispay.pokedex.data.model.PokemonDetail
+import com.satispay.pokedex.data.model.Sprites
 import com.satispay.pokedex.data.model.TypeSlot
+import com.satispay.pokedex.R
 
 @Composable
 fun PokemonCard(pokemonDetail: PokemonDetail?, modifier: Modifier) {
-
-    val avatar: AsyncImagePainter = rememberAsyncImagePainter(model = pokemonDetail?.sprites?.frontDefault)
-
-    Card(
-        shape = MaterialTheme.shapes.medium,
-        modifier = modifier.padding(start = 8.dp, top = 4.dp, end = 8.dp, bottom = 4.dp)
-    ) {
-        Box(contentAlignment = Alignment.Center) {
-            Image(
-                painter = avatar,
-                contentDescription = null,
-                modifier = Modifier
-                    .width(width = 300.dp)
-                    .height(height = 300.dp),
-                contentScale = ContentScale.FillBounds
+    Column {
+        Row {
+            AsyncImage(
+                modifier = modifier
+                    .weight(1f)
+                    .padding(all = 4.dp)
+                    .align(alignment = Alignment.CenterVertically),
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(data = pokemonDetail?.sprites?.frontDefault)
+                    .crossfade(true)
+                    .placeholder(R.drawable.ico_loading)
+                    .error(R.drawable.ico_pokemon_error)
+                    .build(),
+                contentDescription = "Pokemon Image",
+                contentScale = ContentScale.FillWidth
             )
 
-            Surface(
-                color = MaterialTheme.colorScheme.onSurface.copy(alpha = .3f),
-                modifier = Modifier.align(Alignment.BottomCenter),
-                contentColor = MaterialTheme.colorScheme.surface
+            BoxWithConstraints(
+                modifier = modifier
+                    .weight(weight = 3f)
+                    .padding(vertical = 12.dp)
             ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(all = 4.dp)
-                ) {
-                    Text(text = pokemonDetail?.name.toString())
-                    Text(text = pokemonDetail?.flavorTextEntries?.get(0)?.flavorText.toString())
-                    PokemonTypes(types = pokemonDetail?.types ?: emptyList())
-                }
+                AdaptiveContent(pokemonDetail = pokemonDetail)
             }
         }
+        Box(modifier = Modifier
+            .fillMaxWidth()
+            .height(1.dp)
+            .padding(horizontal = 16.dp)
+            .background(Color.LightGray)
+        )
+    }
+}
+
+@Composable
+fun BoxWithConstraintsScope.AdaptiveContent(pokemonDetail: PokemonDetail?) {
+
+    val flavorText = cleanupFlavorText(
+        pokemonDetail?.flavorTextEntries?.firstOrNull()?.flavorText
+    )
+
+    Column(verticalArrangement = Arrangement.SpaceBetween) {
+        Text(
+            text = pokemonDetail?.name?.replaceFirstChar { it.uppercase() }.toString(),
+            fontWeight = FontWeight.Bold,
+            fontSize = MaterialTheme.typography.titleLarge.fontSize,
+            color = MaterialTheme.colorScheme.onSurface,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis
+        )
+        Spacer(modifier = Modifier.height(height = 4.dp))
+        PokemonTypes(types = pokemonDetail?.types ?: emptyList())
+        Spacer(modifier = Modifier.height(height = 8.dp))
+        Text(
+            modifier = Modifier.padding(end = 12.dp),
+            text = flavorText,
+            color = MaterialTheme.colorScheme.onSurface,
+            maxLines = 2,
+            overflow = TextOverflow.Ellipsis
+        )
     }
 }
 
 @Composable
 fun PokemonTypes(types: List<TypeSlot>) {
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp),
+        modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         types.forEach { typeSlot ->
@@ -91,16 +124,35 @@ fun PokemonTypes(types: List<TypeSlot>) {
     }
 }
 
+private fun cleanupFlavorText(text: String?): String {
+    return text
+        ?.replace("\n", " ")
+        ?.replace("\r", " ")
+        ?.replace("\\b", "")
+        ?: ""
+}
+
 @Preview(showBackground = true)
 @Composable
 fun PokemonCardPreview() {
-    /*
     PokemonCard(
-        pokemon = PokemonDetail(
+        pokemonDetail = PokemonDetail(
+            id = 25,
             name = "Pikachu",
-            url = "",
+            species = NameUrl(name="pikachu", url="https://pokeapi.co/api/v2/pokemon-species/25/"),
+            sprites = Sprites(
+                backDefault="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/25.png",
+                backFemale="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/female/25.png",
+                backShiny="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/shiny/25.png",
+                backShinyFemale="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/shiny/female/25.png",
+                frontDefault="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png",
+                frontFemale="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/female/25.png",
+                frontShiny="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/25.png",
+                frontShinyFemale="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/female/25.png"
+            ),
+            types = arrayListOf(TypeSlot(slot=1, type=NameUrl(name="electric", url="https://pokeapi.co/api/v2/type/13/"))),
+            flavorTextEntries = emptyList()
         ),
-        modifier = Modifier
+        modifier = Modifier.background(Color.White)
     )
-    */
 }

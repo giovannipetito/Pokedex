@@ -58,8 +58,8 @@ fun PokedexModalDrawerSheet(
                 modifier = Modifier
                     .size(size = 100.dp)
                     .clip(shape = CircleShape),
-                painter = painterResource(id = R.drawable.logo_audioslave),
-                contentDescription = "Circular Image"
+                painter = painterResource(id = R.drawable.ico_pokeball),
+                contentDescription = "Poke ball Image"
             )
         }
 

@@ -11,11 +11,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
-import androidx.compose.material3.ExtendedFloatingActionButton
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -91,16 +90,7 @@ fun PokedexModalNavigationDrawer(
         Scaffold(
             floatingActionButton = {
                 if (currentRoute in mainRoutes) {
-                    ExtendedFloatingActionButton(
-                        text = {
-                            var text: String
-                            drawerState.apply {
-                                text = if (isClosed) "Open"
-                                else "Close"
-                            }
-                            Text(text = text)
-                        },
-                        icon = { Icon(Icons.Filled.Menu, contentDescription = "") },
+                    FloatingActionButton(
                         onClick = {
                             drawerScope.launch {
                                 drawerState.apply {
@@ -109,7 +99,9 @@ fun PokedexModalNavigationDrawer(
                                 }
                             }
                         }
-                    )
+                    ) {
+                        Icon(imageVector = Icons.Filled.Menu, contentDescription = "Menu")
+                    }
                 }
             },
             bottomBar = {
