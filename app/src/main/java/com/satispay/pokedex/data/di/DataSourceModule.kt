@@ -1,7 +1,7 @@
 package com.satispay.pokedex.data.di
 
-import com.satispay.pokedex.data.datasource.remote.UsersDataSource
-import com.satispay.pokedex.data.datasource.remote.impl.UsersDataSourceImpl
+import com.satispay.pokedex.data.datasource.remote.PokemonDataSource
+import com.satispay.pokedex.data.datasource.remote.impl.PokemonDataSourceImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,7 +14,7 @@ class DataSourceModule {
 
     @Provides
     @Singleton
-    fun provideUsersDataSource(dataSource: UsersDataSourceImpl): UsersDataSource {
+    fun providePokemonDataSource(dataSource: PokemonDataSourceImpl): PokemonDataSource {
         return dataSource
     }
 }

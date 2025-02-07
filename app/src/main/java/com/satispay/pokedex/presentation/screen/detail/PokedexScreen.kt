@@ -34,6 +34,8 @@ import androidx.paging.compose.itemKey
 import com.satispay.pokedex.R
 import com.satispay.pokedex.data.model.PokemonDetail
 import com.satispay.pokedex.domain.AlertBarState
+import com.satispay.pokedex.domain.entity.PokemonEntity
+import com.satispay.pokedex.presentation.viewmodel.MainViewModel
 import com.satispay.pokedex.presentation.viewmodel.PagingViewModel
 import com.satispay.pokedex.presentation.viewmodel.UIEvent
 import com.satispay.pokedex.ui.items.AlertBarContent
@@ -50,6 +52,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun PokedexScreen(
     navController: NavController,
+    mainViewModel: MainViewModel,
     viewModel: PagingViewModel = hiltViewModel()
 ) {
     val topics: List<String> = listOf(
@@ -95,7 +98,8 @@ fun PokedexScreen(
             if (searchedPokemons.isNotEmpty()) {
                 ShowSearchedPokemons(
                     paddingValues = paddingValues,
-                    searchedPokemons = searchedPokemons
+                    searchedPokemons = searchedPokemons,
+                    mainViewModel = mainViewModel
                 )
             } else {
                 ShowPokemons(
@@ -197,7 +201,8 @@ fun ShowPokemons(
 @Composable
 fun ShowSearchedPokemons(
     paddingValues: PaddingValues,
-    searchedPokemons: List<PokemonDetail>
+    searchedPokemons: List<PokemonDetail>,
+    mainViewModel: MainViewModel
 ) {
     LazyColumn(
         modifier = Modifier
@@ -210,7 +215,16 @@ fun ShowSearchedPokemons(
             key = { it.id }
         ) { pokemonDetail ->
             Spacer(modifier = Modifier.height(4.dp))
-            PokemonCard(pokemonDetail = pokemonDetail, modifier = Modifier, isSearch = true, onFavoriteClick = {})
+            PokemonCard(pokemonDetail = pokemonDetail, modifier = Modifier, isSearch = true, onFavoriteClick = {
+                mainViewModel.createPokemon(
+                    pokemonEntity = PokemonEntity(
+                        id = pokemonDetail.id,
+                        name = pokemonDetail.name,
+                        description = "",
+                        imageUrl = pokemonDetail.sprites.frontDefault,
+                    )
+                )
+            })
             Spacer(modifier = Modifier.height(4.dp))
         }
     }
@@ -219,5 +233,5 @@ fun ShowSearchedPokemons(
 @Preview(showBackground = true)
 @Composable
 fun PokedexScreenPreview() {
-    PokedexScreen(navController = rememberNavController())
+    PokedexScreen(navController = rememberNavController(), mainViewModel = hiltViewModel())
 }

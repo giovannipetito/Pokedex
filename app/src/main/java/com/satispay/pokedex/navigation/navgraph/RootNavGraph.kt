@@ -40,7 +40,8 @@ fun RootNavGraph(
         )
 
         profileNavGraph(
-            navController = navController
+            navController = navController,
+            mainViewModel = mainViewModel
         )
     }
 }

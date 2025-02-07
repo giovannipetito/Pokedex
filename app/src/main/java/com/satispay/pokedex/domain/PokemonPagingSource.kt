@@ -4,7 +4,7 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingSource.LoadParams
 import androidx.paging.PagingSource.LoadResult
 import androidx.paging.PagingState
-import com.satispay.pokedex.data.datasource.remote.UsersDataSource
+import com.satispay.pokedex.data.datasource.remote.PokemonDataSource
 import com.satispay.pokedex.data.model.Pokemon
 import com.satispay.pokedex.data.model.PokemonDetail
 import com.satispay.pokedex.data.response.PokemonResponse
@@ -14,7 +14,7 @@ import retrofit2.HttpException
 import java.io.IOException
 
 class PokemonPagingSource(
-    private val dataSource: UsersDataSource,
+    private val dataSource: PokemonDataSource,
     private val onEvent: (UIEvent) -> Unit
 ) : PagingSource<Int, PokemonDetail>() {
 

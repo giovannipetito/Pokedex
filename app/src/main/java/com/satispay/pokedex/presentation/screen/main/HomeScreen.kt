@@ -11,19 +11,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.satispay.pokedex.R
 import com.satispay.pokedex.navigation.routes.HomeRoutes
-import com.satispay.pokedex.presentation.viewmodel.MainViewModel
 import com.satispay.pokedex.ui.items.MainTextButton
 import com.satispay.pokedex.utils.Constants.STATUS_BAR_HEIGHT
 
 @Composable
 fun HomeScreen(
-    navController: NavController,
-    mainViewModel: MainViewModel
+    navController: NavController
 ) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
@@ -52,5 +49,5 @@ fun HomeScreen(
 @Preview(showBackground = true)
 @Composable
 fun HomeScreenPreview() {
-    HomeScreen(navController = rememberNavController(), mainViewModel = viewModel())
+    HomeScreen(navController = rememberNavController())
 }

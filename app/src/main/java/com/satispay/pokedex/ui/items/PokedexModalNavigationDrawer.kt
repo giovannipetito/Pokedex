@@ -121,7 +121,7 @@ fun PokedexModalNavigationDrawer(
                     state = pagerState
                 ) { index ->
                     when (index) {
-                        0 -> HomeScreen(navController = navController, mainViewModel = mainViewModel)
+                        0 -> HomeScreen(navController = navController)
                         1 -> ProfileScreen(navController = navController)
                     }
                 }

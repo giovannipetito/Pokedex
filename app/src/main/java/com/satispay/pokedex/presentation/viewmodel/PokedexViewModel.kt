@@ -7,7 +7,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
-import com.satispay.pokedex.data.datasource.remote.UsersDataSource
+import com.satispay.pokedex.data.datasource.remote.PokemonDataSource
 import com.satispay.pokedex.data.model.PokemonDetail
 import com.satispay.pokedex.domain.PokemonPagingSource
 import com.satispay.pokedex.utils.Config.BASE_URL
@@ -23,7 +23,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PagingViewModel @Inject constructor(
-    private val dataSource: UsersDataSource
+    private val dataSource: PokemonDataSource
 ) : ViewModel() {
 
     private val _uiEvents = MutableSharedFlow<UIEvent>()

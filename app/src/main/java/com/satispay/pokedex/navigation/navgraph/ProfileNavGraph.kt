@@ -9,9 +9,11 @@ import com.satispay.pokedex.navigation.routes.MainRoutes
 import com.satispay.pokedex.navigation.routes.ProfileRoutes
 import com.satispay.pokedex.presentation.screen.detail.FavoritesScreen
 import com.satispay.pokedex.presentation.screen.main.ProfileScreen
+import com.satispay.pokedex.presentation.viewmodel.MainViewModel
 
 fun NavGraphBuilder.profileNavGraph(
-    navController: NavHostController
+    navController: NavHostController,
+    mainViewModel: MainViewModel
 ) {
     navigation(
         route = Graph.PROFILE_ROUTE,
@@ -24,7 +26,7 @@ fun NavGraphBuilder.profileNavGraph(
         }
 
         composable<ProfileRoutes.Favorites> {
-            FavoritesScreen(navController = navController)
+            FavoritesScreen(navController = navController, mainViewModel = mainViewModel)
         }
     }
 }
