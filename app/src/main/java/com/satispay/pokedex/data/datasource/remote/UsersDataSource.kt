@@ -9,5 +9,7 @@ interface UsersDataSource {
 
     suspend fun getPokemonDetail(url: String): PokemonDetail
 
+    suspend fun getPokemonDetailBySearch(searchUrl: String): PokemonDetail
+
     suspend fun getPokemonSpecies(url: String): PokemonSpecies
 }

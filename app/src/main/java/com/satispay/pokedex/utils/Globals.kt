@@ -52,6 +52,16 @@ object Globals {
     }
 
     @Composable
+    fun getContentPaddingTop(paddingValues: PaddingValues): PaddingValues {
+        return PaddingValues(
+            start = paddingValues.calculateStartPadding(layoutDirection = LayoutDirection.Ltr),
+            end = paddingValues.calculateEndPadding(layoutDirection = LayoutDirection.Ltr),
+            bottom = paddingValues.calculateBottomPadding(),
+            top = paddingValues.calculateTopPadding()
+        )
+    }
+
+    @Composable
     fun getTextFieldColors(): TextFieldColors {
         return TextFieldColors(
             focusedTextColor = MaterialTheme.colorScheme.primary,

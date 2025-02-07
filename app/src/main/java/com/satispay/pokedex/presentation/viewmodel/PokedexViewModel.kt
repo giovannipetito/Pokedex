@@ -8,10 +8,9 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
 import com.satispay.pokedex.data.datasource.remote.UsersDataSource
-import com.satispay.pokedex.data.model.Pokemon
 import com.satispay.pokedex.data.model.PokemonDetail
 import com.satispay.pokedex.domain.PokemonPagingSource
-import com.satispay.pokedex.presentation.viewmodel.UIEvent.ShowSuccess
+import com.satispay.pokedex.utils.Config.BASE_URL
 import com.satispay.pokedex.utils.Config.PAGE_LIMIT
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -47,6 +46,39 @@ class PagingViewModel @Inject constructor(
     }
 
     val pokemonFlow: Flow<PagingData<PokemonDetail>> = pager.flow.cachedIn(viewModelScope)
+
+    // Search feature:
+
+    private val _searchText = MutableStateFlow("")
+    val searchText: StateFlow<String> = _searchText.asStateFlow()
+
+    private val _searchedPokemons: MutableStateFlow<List<PokemonDetail>> = MutableStateFlow(emptyList())
+    val searchedPokemons: StateFlow<List<PokemonDetail>> = _searchedPokemons.asStateFlow()
+
+    fun onSearchTextChanged(newText: String) {
+        _searchText.value = newText
+    }
+
+    fun onClearSearch() {
+        _searchText.value = ""
+        _searchedPokemons.value = emptyList()
+    }
+
+    fun onSearchClicked() {
+        val query = _searchText.value.trim()
+        if (query.isEmpty()) return
+
+        viewModelScope.launch {
+            try {
+                val pokemonDetail = dataSource.getPokemonDetailBySearch(BASE_URL + "pokemon/${query.lowercase()}")
+                val species = dataSource.getPokemonSpecies(pokemonDetail.species.url)
+                pokemonDetail.copy(flavorTextEntries = species.flavorTextEntries)
+                _searchedPokemons.value = listOf(pokemonDetail)
+            } catch (e: Exception) {
+                _uiEvents.emit(UIEvent.ShowError("Could not find Pokémon: $query"))
+            }
+        }
+    }
 }
 
 sealed class UIEvent {

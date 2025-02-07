@@ -23,6 +23,10 @@ class UsersDataSourceImpl @Inject constructor(
         return apiService.getPokemonDetail(url)
     }
 
+    override suspend fun getPokemonDetailBySearch(searchUrl: String): PokemonDetail {
+        return apiService.getPokemonDetail(searchUrl)
+    }
+
     override suspend fun getPokemonSpecies(url: String): PokemonSpecies {
         return apiService.getPokemonSpecies(url)
     }
