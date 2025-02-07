@@ -41,10 +41,6 @@ class MainViewModel @Inject constructor(
     private var _roomPokemonById: MutableState<PokemonEntity>? = mutableStateOf(PokemonEntity(0, "", "", ""))
     val roomPokemonById: State<PokemonEntity>? = _roomPokemonById
 
-    init {
-        // readPokemons()
-    }
-
     fun createPokemon(pokemonEntity: PokemonEntity) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.createPokemon(pokemonEntity = pokemonEntity)

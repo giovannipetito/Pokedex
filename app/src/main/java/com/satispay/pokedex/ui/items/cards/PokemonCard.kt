@@ -45,6 +45,7 @@ import com.satispay.pokedex.R
 fun PokemonCard(
     pokemonDetail: PokemonDetail?,
     isSearch: Boolean = false,
+    isFavorite: Boolean = false,
     onFavoriteClick: () -> Unit,
     modifier: Modifier) {
     Column {
@@ -72,6 +73,7 @@ fun PokemonCard(
                 AdaptiveContent(
                     pokemonDetail = pokemonDetail,
                     isSearch = isSearch,
+                    isFavorite = isFavorite,
                     onFavoriteClick = onFavoriteClick
                 )
             }
@@ -89,13 +91,12 @@ fun PokemonCard(
 fun BoxWithConstraintsScope.AdaptiveContent(
     pokemonDetail: PokemonDetail?,
     isSearch: Boolean,
+    isFavorite: Boolean,
     onFavoriteClick: () -> Unit
 ) {
     val flavorText = cleanupFlavorText(
         pokemonDetail?.flavorTextEntries?.firstOrNull()?.flavorText
     )
-
-    var isClicked by remember { mutableStateOf(false) }
 
     Column(verticalArrangement = Arrangement.SpaceBetween) {
         Row(
@@ -116,14 +117,13 @@ fun BoxWithConstraintsScope.AdaptiveContent(
                 IconButton(
                     modifier = Modifier.size(24.dp),
                     onClick = {
-                        isClicked = !isClicked
                         onFavoriteClick()
                     }
                 ) {
                     Icon(
                         imageVector = Icons.Default.Star,
                         contentDescription = "Favorite Icon",
-                        tint = if (isClicked) Color.Yellow else Color.LightGray
+                        tint = if (isFavorite) Color.Yellow else Color.LightGray
                     )
                 }
             }

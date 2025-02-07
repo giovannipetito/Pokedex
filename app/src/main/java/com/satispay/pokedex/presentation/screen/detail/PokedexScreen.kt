@@ -16,7 +16,9 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -78,17 +80,24 @@ fun PokedexScreen(
         onDispose { job.cancel() }
     }
 
-    val pokemonDetails: LazyPagingItems<PokemonDetail> = viewModel.pokemonFlow.collectAsLazyPagingItems()
-
-    val searchedPokemons: List<PokemonDetail> = viewModel.searchedPokemons.collectAsState().value
-
-    val searchText: String = viewModel.searchText.collectAsState().value
-
     BaseScreen(
         navController = navController,
         title = stringResource(id = R.string.pokedex_screen_title),
         topics = topics
     ) { paddingValues ->
+
+        LaunchedEffect(Unit) {
+            mainViewModel.readPokemons()
+        }
+
+        val pokemonDetails: LazyPagingItems<PokemonDetail> = viewModel.pokemonFlow.collectAsLazyPagingItems()
+
+        val searchedPokemons: List<PokemonDetail> = viewModel.searchedPokemons.collectAsState().value
+
+        val searchText: String = viewModel.searchText.collectAsState().value
+
+        val roomPokemons: List<PokemonEntity> by mainViewModel.roomPokemons.collectAsState()
+
         AlertBarContent(
             position = AlertBarPosition.BOTTOM,
             alertBarState = alertBarState,
@@ -99,6 +108,7 @@ fun PokedexScreen(
                 ShowSearchedPokemons(
                     paddingValues = paddingValues,
                     searchedPokemons = searchedPokemons,
+                    roomPokemons = roomPokemons,
                     mainViewModel = mainViewModel
                 )
             } else {
@@ -202,6 +212,7 @@ fun ShowPokemons(
 fun ShowSearchedPokemons(
     paddingValues: PaddingValues,
     searchedPokemons: List<PokemonDetail>,
+    roomPokemons: List<PokemonEntity>,
     mainViewModel: MainViewModel
 ) {
     LazyColumn(
@@ -214,17 +225,42 @@ fun ShowSearchedPokemons(
             items = searchedPokemons,
             key = { it.id }
         ) { pokemonDetail ->
+
+            val isFavorite = roomPokemons.any { it.id == pokemonDetail.id }
+
             Spacer(modifier = Modifier.height(4.dp))
-            PokemonCard(pokemonDetail = pokemonDetail, modifier = Modifier, isSearch = true, onFavoriteClick = {
-                mainViewModel.createPokemon(
-                    pokemonEntity = PokemonEntity(
-                        id = pokemonDetail.id,
-                        name = pokemonDetail.name,
-                        description = "",
-                        imageUrl = pokemonDetail.sprites.frontDefault,
-                    )
-                )
-            })
+
+            PokemonCard(
+                pokemonDetail = pokemonDetail,
+                modifier = Modifier,
+                isSearch = true,
+                isFavorite = isFavorite,
+                onFavoriteClick = {
+                    if (isFavorite) {
+                        pokemonDetail.let {
+                            mainViewModel.deletePokemon(
+                                pokemonEntity = PokemonEntity(
+                                    id = pokemonDetail.id,
+                                    name = pokemonDetail.name,
+                                    description = "",
+                                    imageUrl = pokemonDetail.sprites.frontDefault
+                                )
+                            )
+                        }
+                    } else {
+                        pokemonDetail.let {
+                            mainViewModel.createPokemon(
+                                pokemonEntity = PokemonEntity(
+                                    id = pokemonDetail.id,
+                                    name = pokemonDetail.name,
+                                    description = "",
+                                    imageUrl = pokemonDetail.sprites.frontDefault
+                                )
+                            )
+                        }
+                    }
+                }
+            )
             Spacer(modifier = Modifier.height(4.dp))
         }
     }

@@ -16,8 +16,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import androidx.paging.compose.itemContentType
-import androidx.paging.compose.itemKey
 import com.satispay.pokedex.R
 import com.satispay.pokedex.domain.entity.PokemonEntity
 import com.satispay.pokedex.presentation.viewmodel.MainViewModel
@@ -38,11 +36,11 @@ fun FavoritesScreen(
         topics = topics
     ) { paddingValues ->
 
-        val pokemons: List<PokemonEntity> by mainViewModel.roomPokemons.collectAsState()
-
         LaunchedEffect(Unit) {
             mainViewModel.readPokemons()
         }
+
+        val roomPokemons: List<PokemonEntity> by mainViewModel.roomPokemons.collectAsState()
 
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
@@ -50,7 +48,7 @@ fun FavoritesScreen(
             // horizontalAlignment = Alignment.CenterHorizontally,
             contentPadding = getContentPadding(paddingValues = paddingValues)
         ) {
-            items(pokemons) { pokemon ->
+            items(roomPokemons) { pokemon ->
                 Spacer(modifier = Modifier.height(height = 4.dp))
                 RoomPokemonCard(pokemon = pokemon, modifier = Modifier)
                 Spacer(modifier = Modifier.height(height = 4.dp))

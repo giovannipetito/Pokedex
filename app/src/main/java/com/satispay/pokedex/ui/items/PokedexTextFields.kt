@@ -62,16 +62,18 @@ fun PokedexTextField(
                 }
             },
             trailingIcon = {
-                IconButton(
-                    onClick = {
-                        onTextChange("")
-                        onCloseClicked()
+                if (text.isNotEmpty()) {
+                    IconButton(
+                        onClick = {
+                            onTextChange("")
+                            onCloseClicked()
+                        }
+                    ) {
+                        Icon(
+                            imageVector = Icons.Filled.Close,
+                            contentDescription = "Close Icon"
+                        )
                     }
-                ) {
-                    Icon(
-                        imageVector = Icons.Filled.Close,
-                        contentDescription = "Close Icon"
-                    )
                 }
             },
             keyboardOptions = KeyboardOptions(
