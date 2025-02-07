@@ -1,6 +1,5 @@
 package com.satispay.pokedex.navigation.navgraph
 
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
@@ -8,12 +7,13 @@ import androidx.navigation.navigation
 import com.satispay.pokedex.navigation.Graph
 import com.satispay.pokedex.navigation.routes.MainRoutes
 import com.satispay.pokedex.navigation.routes.ProfileRoutes
-import com.satispay.pokedex.presentation.screen.detail.PokedexScreen
+import com.satispay.pokedex.presentation.screen.detail.FavoritesScreen
 import com.satispay.pokedex.presentation.screen.main.ProfileScreen
+import com.satispay.pokedex.presentation.viewmodel.MainViewModel
 
-@ExperimentalAnimationApi
 fun NavGraphBuilder.profileNavGraph(
-    navController: NavHostController
+    navController: NavHostController,
+    mainViewModel: MainViewModel
 ) {
     navigation(
         route = Graph.PROFILE_ROUTE,
@@ -25,8 +25,8 @@ fun NavGraphBuilder.profileNavGraph(
             ProfileScreen(navController = navController)
         }
 
-        composable<ProfileRoutes.Pokedex> {
-            PokedexScreen(navController = navController)
+        composable<ProfileRoutes.Favorites> {
+            FavoritesScreen(navController = navController, mainViewModel = mainViewModel)
         }
     }
 }

@@ -68,7 +68,7 @@ val md_theme_dark_scrim = Color(0xFF000000)
 val seed = Color(0xFF00416A)
 
 @Immutable
-data class HubColors(
+data class PokedexColors(
     val neutralColor: Color,
     val backgroundStartColor: Color,
     val backgroundEndColor: Color

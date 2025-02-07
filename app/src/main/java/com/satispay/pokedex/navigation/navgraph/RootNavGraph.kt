@@ -1,6 +1,5 @@
 package com.satispay.pokedex.navigation.navgraph
 
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
@@ -12,7 +11,6 @@ import com.satispay.pokedex.navigation.Loading
 import com.satispay.pokedex.presentation.screen.main.LoadingScreen
 import com.satispay.pokedex.presentation.viewmodel.MainViewModel
 
-@ExperimentalAnimationApi
 @Composable
 fun RootNavGraph(
     navController: NavHostController,
@@ -42,11 +40,8 @@ fun RootNavGraph(
         )
 
         profileNavGraph(
-            navController = navController
-        )
-
-        settingsNavGraph(
-            navController = navController
+            navController = navController,
+            mainViewModel = mainViewModel
         )
     }
 }

@@ -79,7 +79,7 @@ fun ColorSwitcher(
                     modifier = Modifier
                         .size(size = iconSize)
                         .clip(shape = CircleShape),
-                    painter = painterResource(id = R.drawable.logo_audioslave),
+                    painter = painterResource(id = R.drawable.ico_pokeball),
                     contentDescription = "Theme Image"
                 )
             }

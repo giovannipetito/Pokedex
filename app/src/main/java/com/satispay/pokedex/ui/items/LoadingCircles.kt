@@ -5,20 +5,17 @@ import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.keyframes
-import androidx.compose.foundation.background
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
@@ -26,11 +23,15 @@ import kotlinx.coroutines.delay
 @Composable
 fun LoadingCircles(
     modifier: Modifier = Modifier,
-    circleColor: Color = MaterialTheme.colorScheme.primary,
-    circleSize: Dp = 25.dp,
-    spaceBetween: Dp = 10.dp,
-    travelDistance: Dp = 20.dp
+    circleImages: List<Int>,
+    circleSize: Dp = 48.dp,
+    spaceBetween: Dp = 16.dp,
+    travelDistance: Dp = 24.dp
 ) {
+    require(circleImages.size == 3) {
+        "circleImages must contain exactly three resource IDs."
+    }
+
     val circles = listOf(
         remember { Animatable(initialValue = 0f) },
         remember { Animatable(initialValue = 0f) },
@@ -63,16 +64,15 @@ fun LoadingCircles(
         modifier = modifier,
         horizontalArrangement = Arrangement.spacedBy(spaceBetween)
     ) {
-        circleValues.forEach { value ->
-            Box(modifier = Modifier
-                .size(size = circleSize)
-                .graphicsLayer {
-                    translationY = -value * distance
-                }
-                .background(
-                    color = circleColor,
-                    shape = CircleShape
-                )
+        circleValues.forEachIndexed { index, value ->
+            Image(
+                painter = painterResource(id = circleImages[index]),
+                contentDescription = null,
+                modifier = Modifier
+                    .size(size = circleSize)
+                    .graphicsLayer {
+                        translationY = -value * distance
+                    }
             )
         }
     }

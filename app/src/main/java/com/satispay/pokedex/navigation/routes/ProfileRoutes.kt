@@ -5,5 +5,5 @@ import kotlinx.serialization.Serializable
 @Serializable
 sealed class ProfileRoutes {
     @Serializable
-    data object Pokedex: ProfileRoutes()
+    data object Favorites: ProfileRoutes()
 }

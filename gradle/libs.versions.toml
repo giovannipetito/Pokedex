@@ -30,6 +30,7 @@ serializationJson = "1.7.3"
 navigationCompose = "2.8.5"
 adaptiveNavigation = "1.0.0"
 adaptiveNavigationSuite = "1.3.1"
+coilCompose = "2.7.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -83,6 +84,8 @@ rxkotlin = { group = "io.reactivex.rxjava3", name = "rxkotlin", version.ref = "r
 kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
 kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "serializationJson" }
+
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
 
 androidx-hilt-compiler = { group = "androidx.hilt", name = "hilt-compiler", version.ref = "hilt" }
 androidx-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hilt" }

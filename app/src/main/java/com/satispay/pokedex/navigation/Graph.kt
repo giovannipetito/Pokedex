@@ -7,7 +7,6 @@ object Graph {
     // NavGraph routes
     const val HOME_ROUTE = "home"
     const val PROFILE_ROUTE = "profile"
-    const val SETTINGS_ROUTE = "settings"
 }
 
 @Serializable

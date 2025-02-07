@@ -20,7 +20,7 @@ import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
 // Material 3 light color scheme
-private val hubLightColorScheme: ColorScheme = lightColorScheme(
+private val pokedexLightColorScheme: ColorScheme = lightColorScheme(
     primary = md_theme_light_primary,
     onPrimary = md_theme_light_onPrimary,
     primaryContainer = md_theme_light_primaryContainer,
@@ -54,7 +54,7 @@ private val hubLightColorScheme: ColorScheme = lightColorScheme(
 )
 
 // Material 3 dark color scheme
-private val hubDarkColorScheme: ColorScheme = darkColorScheme(
+private val pokedexDarkColorScheme: ColorScheme = darkColorScheme(
     primary = md_theme_dark_primary,
     onPrimary = md_theme_dark_onPrimary,
     primaryContainer = md_theme_dark_primaryContainer,
@@ -87,22 +87,22 @@ private val hubDarkColorScheme: ColorScheme = darkColorScheme(
     scrim = md_theme_dark_scrim
 )
 
-val LocalHubColors = compositionLocalOf {
-    HubColors(Color.Unspecified, Color.Unspecified, Color.Unspecified)
+val LocalPokedexColors = compositionLocalOf {
+    PokedexColors(Color.Unspecified, Color.Unspecified, Color.Unspecified)
 }
 
 @Composable
 fun PokedexTheme(
     darkTheme: Boolean,
     dynamicColor: Boolean,
-    hubColors: HubColors = HubColors(
+    pokedexColors: PokedexColors = PokedexColors(
         neutralColor = if (darkTheme) Color(0xFFFFFFFF) else Color(0xFF000000),
         backgroundStartColor = if (darkTheme) Color(0xFF292E49) else Color(0xFFC9D6FF),
         backgroundEndColor = if (darkTheme) Color(0xFF536976) else Color(0xFFE2E2E2)
     ),
     content: @Composable () -> Unit
 ) {
-    val hubColorScheme: ColorScheme = when {
+    val pokedexColorScheme: ColorScheme = when {
         dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
             val context = LocalContext.current
             if (darkTheme)
@@ -110,8 +110,8 @@ fun PokedexTheme(
             else
                 dynamicLightColorScheme(context)
         }
-        darkTheme -> hubDarkColorScheme
-        else -> hubLightColorScheme
+        darkTheme -> pokedexDarkColorScheme
+        else -> pokedexLightColorScheme
     }
 
     /**
@@ -126,11 +126,11 @@ fun PokedexTheme(
         }
     }
 
-    CompositionLocalProvider(LocalHubColors provides hubColors) {
+    CompositionLocalProvider(LocalPokedexColors provides pokedexColors) {
         MaterialTheme(
-            colorScheme = hubColorScheme,
+            colorScheme = pokedexColorScheme,
             shapes = shapes,
-            typography = hubTypography,
+            typography = pokedexTypography,
             content = content
         )
     }

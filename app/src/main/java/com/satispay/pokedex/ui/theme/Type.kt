@@ -25,7 +25,7 @@ val fontFamily = FontFamily(
 )
 
 // Pokedex Material 3 typography
-val hubTypography = Typography(
+val pokedexTypography = Typography(
 
     displayLarge = TextStyle(
         fontFamily = fontFamily, // FontFamily.Default
