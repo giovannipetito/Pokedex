@@ -20,6 +20,7 @@ import com.satispay.pokedex.navigation.routes.MainRoutes
 import com.satispay.pokedex.presentation.viewmodel.LoadingViewModel
 import com.satispay.pokedex.ui.items.LoadingCircles
 import kotlinx.coroutines.delay
+import com.satispay.pokedex.R
 
 @Composable
 fun LoadingScreen(
@@ -59,7 +60,13 @@ fun LoadingScreenContent() {
             .background(color = MaterialTheme.colorScheme.background),
         contentAlignment = Alignment.Center
     ) {
-        LoadingCircles()
+        LoadingCircles(
+            circleImages = listOf(
+                R.drawable.ico_bulbasaur,
+                R.drawable.ico_charmander,
+                R.drawable.ico_squirtle
+            )
+        )
     }
 }
 

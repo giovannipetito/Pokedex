@@ -92,15 +92,6 @@ fun PokedexScreen(
             successMaxLines = 3,
             errorMaxLines = 3
         ) {
-            /*
-            ShowPokemons(
-                paddingValues = paddingValues,
-                viewModel = viewModel,
-                pokemonDetails = pokemonDetails,
-                searchText = searchText
-            )
-            */
-
             if (searchedPokemons.isNotEmpty()) {
                 ShowSearchedPokemons(
                     paddingValues = paddingValues,
@@ -168,7 +159,7 @@ fun ShowPokemons(
         ) { index: Int ->
             val pokemonDetail: PokemonDetail? = pokemonDetails[index]
             Spacer(modifier = Modifier.height(height = 4.dp))
-            PokemonCard(pokemonDetail = pokemonDetail, modifier = Modifier)
+            PokemonCard(pokemonDetail = pokemonDetail, modifier = Modifier, onFavoriteClick = {})
             Spacer(modifier = Modifier.height(height = 4.dp))
         }
 
@@ -219,7 +210,7 @@ fun ShowSearchedPokemons(
             key = { it.id }
         ) { pokemonDetail ->
             Spacer(modifier = Modifier.height(4.dp))
-            PokemonCard(pokemonDetail = pokemonDetail, modifier = Modifier)
+            PokemonCard(pokemonDetail = pokemonDetail, modifier = Modifier, isSearch = true, onFavoriteClick = {})
             Spacer(modifier = Modifier.height(4.dp))
         }
     }
