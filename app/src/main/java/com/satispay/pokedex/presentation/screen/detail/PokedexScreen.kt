@@ -125,7 +125,7 @@ fun PokedexScreen(
                         .background(color = MaterialTheme.colorScheme.background)
                         .padding(top = 24.dp)
                 ) {
-                    CustomTitle(color = MaterialTheme.colorScheme.primary)
+                    CustomTitle(color = MaterialTheme.colorScheme.onSurface)
                     Spacer(modifier = Modifier.height(24.dp))
                     PokedexTextField(
                         text = searchText,

@@ -82,7 +82,7 @@ fun PokemonCard(
             .fillMaxWidth()
             .height(1.dp)
             .padding(horizontal = 16.dp)
-            .background(Color.LightGray)
+            .background(MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.7f))
         )
     }
 }
@@ -153,14 +153,14 @@ fun PokemonTypes(types: List<TypeSlot>) {
                 contentAlignment = Alignment.Center,
                 modifier = Modifier
                     .background(
-                        color = MaterialTheme.colorScheme.secondary,
+                        color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.7f),
                         shape = RoundedCornerShape(8.dp)
                     )
                     .padding(horizontal = 8.dp, vertical = 4.dp)
             ) {
                 Text(
                     text = typeSlot.type.name,
-                    color = MaterialTheme.colorScheme.onSecondary
+                    color = MaterialTheme.colorScheme.outline
                 )
             }
         }

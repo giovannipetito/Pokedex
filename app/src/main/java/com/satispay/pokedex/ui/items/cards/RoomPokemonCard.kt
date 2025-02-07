@@ -28,15 +28,15 @@ fun RoomPokemonCard(pokemon: PokemonEntity, modifier: Modifier) {
 
     Card(
         shape = MaterialTheme.shapes.medium,
-        modifier = modifier.padding(start = 8.dp, top = 4.dp, end = 8.dp, bottom = 4.dp)
+        modifier = modifier.padding(horizontal = 48.dp, vertical = 12.dp)
     ) {
         Box(contentAlignment = Alignment.Center) {
             Image(
                 painter = avatar,
                 contentDescription = null,
                 modifier = Modifier
-                    .width(width = 300.dp)
-                    .height(height = 300.dp),
+                    .width(width = 200.dp)
+                    .height(height = 200.dp),
                 contentScale = ContentScale.FillBounds
             )
 
@@ -48,9 +48,9 @@ fun RoomPokemonCard(pokemon: PokemonEntity, modifier: Modifier) {
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(all = 4.dp)
+                        .padding(horizontal = 16.dp, vertical = 8.dp)
                 ) {
-                    Text(text = pokemon.name.toString())
+                    Text(text = pokemon.name?.replaceFirstChar { it.uppercase() }.orEmpty())
                 }
             }
         }

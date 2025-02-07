@@ -1,8 +1,6 @@
 package com.satispay.pokedex.presentation.screen.detail
 
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
@@ -12,7 +10,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
@@ -28,7 +25,13 @@ fun FavoritesScreen(
     mainViewModel: MainViewModel
 ) {
 
-    val topics: List<String> = listOf("Room database")
+    val topics: List<String> = listOf(
+        "Room database",
+        "CRUD operations",
+        "Entity", "DAO",
+        "Dependency Injection",
+        "Coroutines"
+    )
 
     BaseScreen(
         navController = navController,
@@ -49,9 +52,7 @@ fun FavoritesScreen(
             contentPadding = getContentPadding(paddingValues = paddingValues)
         ) {
             items(roomPokemons) { pokemon ->
-                Spacer(modifier = Modifier.height(height = 4.dp))
                 RoomPokemonCard(pokemon = pokemon, modifier = Modifier)
-                Spacer(modifier = Modifier.height(height = 4.dp))
             }
         }
     }
